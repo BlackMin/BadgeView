@@ -120,9 +120,9 @@ public class BadgeLayout extends FrameLayout {
     }
 
     public void setBadgeOffSetX(float badgeOffSetX) {
-        if (Float.compare(badgeOffSetX,0) < 0) {
+        if (Float.compare(badgeOffSetX, 0) < 0) {
             this.badgeOffSetX = 0;
-        } else if (Float.compare(badgeOffSetX,1) > 0) {
+        } else if (Float.compare(badgeOffSetX, 1) > 0) {
             this.badgeOffSetX = 1;
         } else {
             this.badgeOffSetX = badgeOffSetX;
@@ -132,9 +132,9 @@ public class BadgeLayout extends FrameLayout {
     }
 
     public void setBadgeOffSetY(float badgeOffSetY) {
-        if (Float.compare(badgeOffSetY,0) < 0) {
+        if (Float.compare(badgeOffSetY, 0) < 0) {
             this.badgeOffSetY = 0;
-        } else if (Float.compare(badgeOffSetY,1) > 0) {
+        } else if (Float.compare(badgeOffSetY, 1) > 0) {
             this.badgeOffSetY = 1;
         } else {
             this.badgeOffSetY = badgeOffSetY;
@@ -145,37 +145,37 @@ public class BadgeLayout extends FrameLayout {
 
     public void setBadgeType(int badgeType) {
         this.badgeType = badgeType;
-        if(getChildCount() > 1) {
+        if (getChildCount() > 1) {
             BadgeView badgeView = (BadgeView) getChildAt(1);
             badgeView.setBadgeType(badgeType);
         }
     }
 
     public void setBadgeText(String text) {
-        if(getChildCount() > 1) {
+        if (getChildCount() > 1) {
             BadgeView badgeView = (BadgeView) getChildAt(1);
             badgeView.setText(text);
         }
     }
 
     public void setBadgeTextSize(int textSize) {
-        if(getChildCount() > 1) {
+        if (getChildCount() > 1) {
             BadgeView badgeView = (BadgeView) getChildAt(1);
             badgeView.setTextSize(textSize);
         }
     }
 
     public void setBadgePadding(int left, int top, int right, int bottom) {
-        if(getChildCount() > 1) {
+        if (getChildCount() > 1) {
             BadgeView badgeView = (BadgeView) getChildAt(1);
             badgeView.setPadding(left, top, right, bottom);
         }
     }
 
     public void showBadge(boolean showBadge) {
-        if(getChildCount() > 1) {
+        if (getChildCount() > 1) {
             BadgeView badgeView = (BadgeView) getChildAt(1);
-            badgeView.showBadge(showBadge);
+            badgeView.setVisibility(showBadge ? VISIBLE : INVISIBLE);
         }
     }
 
@@ -280,15 +280,15 @@ public class BadgeLayout extends FrameLayout {
         switch (widthMode) {
             case MeasureSpec.AT_MOST:
             case MeasureSpec.EXACTLY:
-                if(targetViewLayoutHorizontalGravity == Gravity.RIGHT) {
+                if (targetViewLayoutHorizontalGravity == Gravity.RIGHT) {
                     maxBadgeOffsetX = 0;
-                }else if(targetViewLayoutHorizontalGravity == Gravity.CENTER_HORIZONTAL){
+                } else if (targetViewLayoutHorizontalGravity == Gravity.CENTER_HORIZONTAL) {
                     maxBadgeOffsetX = Math.max(0,
-                            Math.min(remainWidth / 2,badgeViewWidth) * 1.0f / badgeViewWidth);
-                }else {
-                    if(targetViewLayoutHorizontalGravity == Gravity.NO_GRAVITY) {
+                            Math.min(remainWidth / 2, badgeViewWidth) * 1.0f / badgeViewWidth);
+                } else {
+                    if (targetViewLayoutHorizontalGravity == Gravity.NO_GRAVITY) {
                         params.gravity = Gravity.LEFT;
-                    }else {
+                    } else {
                         params.gravity |= Gravity.LEFT;
                     }
                     maxBadgeOffsetX = Math.max(0, Math.min(remainWidth, badgeViewWidth) * 1.0f / badgeViewWidth);
@@ -301,15 +301,15 @@ public class BadgeLayout extends FrameLayout {
         switch (heightMode) {
             case MeasureSpec.AT_MOST:
             case MeasureSpec.EXACTLY:
-                if(targetViewLayoutVerticalGravity == Gravity.TOP) {
+                if (targetViewLayoutVerticalGravity == Gravity.TOP) {
                     maxBadgeOffsetY = 0;
-                }else if(targetViewLayoutVerticalGravity == Gravity.CENTER_VERTICAL){
+                } else if (targetViewLayoutVerticalGravity == Gravity.CENTER_VERTICAL) {
                     maxBadgeOffsetY = Math.max(0,
-                            Math.min(remainHeight / 2,badgeViewHeight) * 1.0f / badgeViewHeight);
-                }else {
-                    if(targetViewLayoutVerticalGravity == Gravity.NO_GRAVITY) {
+                            Math.min(remainHeight / 2, badgeViewHeight) * 1.0f / badgeViewHeight);
+                } else {
+                    if (targetViewLayoutVerticalGravity == Gravity.NO_GRAVITY) {
                         params.gravity = Gravity.BOTTOM;
-                    }else {
+                    } else {
                         params.gravity |= Gravity.BOTTOM;
                     }
                     maxBadgeOffsetY = Math.max(0, Math.min(remainHeight, badgeViewHeight) * 1.0f / badgeViewHeight);
@@ -323,14 +323,7 @@ public class BadgeLayout extends FrameLayout {
         badgeOffSetY = Math.min(badgeOffSetY, maxBadgeOffsetY);
         int resizeWidth = targetViewWidth + (int) (badgeViewWidth * badgeOffSetX * (targetViewLayoutHorizontalGravity == Gravity.CENTER_HORIZONTAL ? 2 : 1));
         int resizeHeight = targetViewHeight + (int) (badgeViewHeight * badgeOffSetY * (targetViewLayoutVerticalGravity == Gravity.CENTER_VERTICAL ? 2 : 1));
-        setMeasuredDimension(resizeWidth,resizeHeight);
+        setMeasuredDimension(resizeWidth, resizeHeight);
     }
 
-    @Override
-    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        super.onLayout(changed, left, top, right, bottom);
-        View targetView = getChildAt(0);
-        View badgeView = getChildAt(1);
-        FrameLayout.LayoutParams params = (LayoutParams) targetView.getLayoutParams();
-    }
 }
