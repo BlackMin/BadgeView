@@ -35,6 +35,8 @@ public class BadgeLayout extends FrameLayout {
     private @ColorInt
     int badgeColor = 0;
 
+    private int badgeTextSize = UIUtils.dip2Px(10);
+
     /**
      * badge 在x轴向右偏移率
      */
@@ -49,6 +51,14 @@ public class BadgeLayout extends FrameLayout {
 
     private float maxBadgeOffsetY = 1.0f;
 
+    private int badgePaddingLeft = BADGE_PADDING;
+
+    private int badgePaddingTop = BADGE_PADDING;
+
+    private int badgePaddingRight = BADGE_PADDING;
+
+    private int badgePaddingBottom = BADGE_PADDING;
+
     public BadgeLayout(@NonNull Context context) {
         super(context);
     }
@@ -59,8 +69,13 @@ public class BadgeLayout extends FrameLayout {
         badgeType = ta.getInt(R.styleable.BadgeLayout_badgeType, badgeType);
         badgeTextColor = ta.getColor(R.styleable.BadgeLayout_badgeTextColor, badgeTextColor);
         badgeColor = ta.getColor(R.styleable.BadgeLayout_badgeColor, badgeColor);
+        badgeTextSize = ta.getDimensionPixelSize(R.styleable.BadgeLayout_badgeTextSize, badgeTextSize);
         setBadgeOffSetX(ta.getFloat(R.styleable.BadgeLayout_badgeOffSetX, badgeOffSetX));
         setBadgeOffSetY(ta.getFloat(R.styleable.BadgeLayout_badgeOffSetY, badgeOffSetY));
+        badgePaddingLeft = ta.getDimensionPixelOffset(R.styleable.BadgeLayout_badgePaddingLeft, badgePaddingLeft);
+        badgePaddingTop = ta.getDimensionPixelOffset(R.styleable.BadgeLayout_badgePaddingTop, badgePaddingTop);
+        badgePaddingRight = ta.getDimensionPixelOffset(R.styleable.BadgeLayout_badgePaddingRight, badgePaddingRight);
+        badgePaddingBottom = ta.getDimensionPixelOffset(R.styleable.BadgeLayout_badgePaddingBottom, badgePaddingBottom);
         ta.recycle();
         init(context);
     }
@@ -71,8 +86,13 @@ public class BadgeLayout extends FrameLayout {
         badgeType = ta.getInt(R.styleable.BadgeLayout_badgeType, badgeType);
         badgeTextColor = ta.getColor(R.styleable.BadgeLayout_badgeTextColor, badgeTextColor);
         badgeColor = ta.getColor(R.styleable.BadgeLayout_badgeColor, badgeColor);
+        badgeTextSize = ta.getDimensionPixelSize(R.styleable.BadgeLayout_badgeTextSize, badgeTextSize);
         setBadgeOffSetX(ta.getFloat(R.styleable.BadgeLayout_badgeOffSetX, badgeOffSetX));
         setBadgeOffSetY(ta.getFloat(R.styleable.BadgeLayout_badgeOffSetY, badgeOffSetY));
+        badgePaddingLeft = ta.getDimensionPixelOffset(R.styleable.BadgeLayout_badgePaddingLeft, badgePaddingLeft);
+        badgePaddingTop = ta.getDimensionPixelOffset(R.styleable.BadgeLayout_badgePaddingTop, badgePaddingTop);
+        badgePaddingRight = ta.getDimensionPixelOffset(R.styleable.BadgeLayout_badgePaddingRight, badgePaddingRight);
+        badgePaddingBottom = ta.getDimensionPixelOffset(R.styleable.BadgeLayout_badgePaddingBottom, badgePaddingBottom);
         ta.recycle();
         init(context);
     }
@@ -84,8 +104,13 @@ public class BadgeLayout extends FrameLayout {
         badgeType = ta.getInt(R.styleable.BadgeLayout_badgeType, badgeType);
         badgeTextColor = ta.getColor(R.styleable.BadgeLayout_badgeTextColor, badgeTextColor);
         badgeColor = ta.getColor(R.styleable.BadgeLayout_badgeColor, badgeColor);
+        badgeTextSize = ta.getDimensionPixelSize(R.styleable.BadgeLayout_badgeTextSize, badgeTextSize);
         setBadgeOffSetX(ta.getFloat(R.styleable.BadgeLayout_badgeOffSetX, badgeOffSetX));
         setBadgeOffSetY(ta.getFloat(R.styleable.BadgeLayout_badgeOffSetY, badgeOffSetY));
+        badgePaddingLeft = ta.getDimensionPixelOffset(R.styleable.BadgeLayout_badgePaddingLeft, badgePaddingLeft);
+        badgePaddingTop = ta.getDimensionPixelOffset(R.styleable.BadgeLayout_badgePaddingTop, badgePaddingTop);
+        badgePaddingRight = ta.getDimensionPixelOffset(R.styleable.BadgeLayout_badgePaddingRight, badgePaddingRight);
+        badgePaddingBottom = ta.getDimensionPixelOffset(R.styleable.BadgeLayout_badgePaddingBottom, badgePaddingBottom);
         ta.recycle();
         init(context);
     }
@@ -95,25 +120,27 @@ public class BadgeLayout extends FrameLayout {
     }
 
     public void setBadgeOffSetX(float badgeOffSetX) {
-        if (badgeOffSetX < 0) {
+        if (Float.compare(badgeOffSetX,0) < 0) {
             this.badgeOffSetX = 0;
-        } else if (badgeOffSetX > 1) {
+        } else if (Float.compare(badgeOffSetX,1) > 0) {
             this.badgeOffSetX = 1;
         } else {
             this.badgeOffSetX = badgeOffSetX;
         }
         requestLayout();
+        invalidate();
     }
 
     public void setBadgeOffSetY(float badgeOffSetY) {
-        if (badgeOffSetY < 0) {
+        if (Float.compare(badgeOffSetY,0) < 0) {
             this.badgeOffSetY = 0;
-        } else if (badgeOffSetY > 1) {
+        } else if (Float.compare(badgeOffSetY,1) > 0) {
             this.badgeOffSetY = 1;
         } else {
             this.badgeOffSetY = badgeOffSetY;
         }
         requestLayout();
+        invalidate();
     }
 
     public void setBadgeType(int badgeType) {
@@ -131,18 +158,36 @@ public class BadgeLayout extends FrameLayout {
         }
     }
 
+    public void setBadgeTextSize(int textSize) {
+        if(getChildCount() > 1) {
+            BadgeView badgeView = (BadgeView) getChildAt(1);
+            badgeView.setTextSize(textSize);
+        }
+    }
+
+    public void setBadgePadding(int left, int top, int right, int bottom) {
+        if(getChildCount() > 1) {
+            BadgeView badgeView = (BadgeView) getChildAt(1);
+            badgeView.setPadding(left, top, right, bottom);
+        }
+    }
+
+    public void showBadge(boolean showBadge) {
+        if(getChildCount() > 1) {
+            BadgeView badgeView = (BadgeView) getChildAt(1);
+            badgeView.showBadge(showBadge);
+        }
+    }
+
     @Override
     public final void addView(View child) {
         if (child instanceof BadgeView && addBadgeViewFromXml) {
             throw new IllegalStateException("BadgeLayout can not add badge view from xml");
         }
-        if (getChildCount() > 2) {
+        if (getChildCount() >= 2) {
             throw new IllegalStateException("BadgeLayout can host only one direct child which is not instance of badgeView");
         }
         super.addView(child);
-        if (!(child instanceof BadgeView)) {
-            addBadgeView();
-        }
     }
 
     @Override
@@ -150,14 +195,10 @@ public class BadgeLayout extends FrameLayout {
         if (child instanceof BadgeView && addBadgeViewFromXml) {
             throw new IllegalStateException("BadgeLayout can not add badge view from xml");
         }
-        if (getChildCount() > 2) {
+        if (getChildCount() >= 2) {
             throw new IllegalStateException("BadgeLayout can host only one direct child which is not instance of badgeView");
         }
         super.addView(child, index);
-        if (!(child instanceof BadgeView)) {
-            addBadgeView();
-        }
-
     }
 
     @Override
@@ -165,13 +206,10 @@ public class BadgeLayout extends FrameLayout {
         if (child instanceof BadgeView && addBadgeViewFromXml) {
             throw new IllegalStateException("BadgeLayout can not add badge view from xml");
         }
-        if (getChildCount() > 2) {
+        if (getChildCount() >= 2) {
             throw new IllegalStateException("BadgeLayout can host only one direct child which is not instance of badgeView");
         }
         super.addView(child, params);
-        if (!(child instanceof BadgeView)) {
-            addBadgeView();
-        }
     }
 
     @Override
@@ -179,7 +217,7 @@ public class BadgeLayout extends FrameLayout {
         if (child instanceof BadgeView && addBadgeViewFromXml) {
             throw new IllegalStateException("BadgeLayout can not add badge view from xml");
         }
-        if (getChildCount() > 2) {
+        if (getChildCount() >= 2) {
             throw new IllegalStateException("BadgeLayout can host only one direct child which is not instance of badgeView");
         }
         super.addView(child, index, params);
@@ -196,7 +234,7 @@ public class BadgeLayout extends FrameLayout {
         badgeView.setTextColor(badgeTextColor);
         badgeView.setBadgeColor(badgeColor);
         badgeView.setTextSize(BADGE_TEXT_SIZE);
-        badgeView.setPadding(BADGE_PADDING, BADGE_PADDING, BADGE_PADDING, BADGE_PADDING);
+        badgeView.setPadding(badgePaddingLeft, badgePaddingTop, badgePaddingRight, badgePaddingBottom);
         addBadgeViewFromXml = false;
         addView(badgeView, params);
         addBadgeViewFromXml = true;
@@ -249,9 +287,9 @@ public class BadgeLayout extends FrameLayout {
                             Math.min(remainWidth / 2,badgeViewWidth) * 1.0f / badgeViewWidth);
                 }else {
                     if(targetViewLayoutHorizontalGravity == Gravity.NO_GRAVITY) {
-                        params.gravity |= Gravity.LEFT;
-                    }else {
                         params.gravity = Gravity.LEFT;
+                    }else {
+                        params.gravity |= Gravity.LEFT;
                     }
                     maxBadgeOffsetX = Math.max(0, Math.min(remainWidth, badgeViewWidth) * 1.0f / badgeViewWidth);
                 }
@@ -270,9 +308,9 @@ public class BadgeLayout extends FrameLayout {
                             Math.min(remainHeight / 2,badgeViewHeight) * 1.0f / badgeViewHeight);
                 }else {
                     if(targetViewLayoutVerticalGravity == Gravity.NO_GRAVITY) {
-                        params.gravity |= Gravity.BOTTOM;
-                    }else {
                         params.gravity = Gravity.BOTTOM;
+                    }else {
+                        params.gravity |= Gravity.BOTTOM;
                     }
                     maxBadgeOffsetY = Math.max(0, Math.min(remainHeight, badgeViewHeight) * 1.0f / badgeViewHeight);
                 }
@@ -288,4 +326,11 @@ public class BadgeLayout extends FrameLayout {
         setMeasuredDimension(resizeWidth,resizeHeight);
     }
 
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+        View targetView = getChildAt(0);
+        View badgeView = getChildAt(1);
+        FrameLayout.LayoutParams params = (LayoutParams) targetView.getLayoutParams();
+    }
 }

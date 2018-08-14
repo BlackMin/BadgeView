@@ -19,5 +19,10 @@
         <attr name="badgeTextColor" format="color"/>
         <attr name="badgeOffSetX" format="float"/>
         <attr name="badgeOffSetY" format="float"/>
+        <attr name="badgeTextSize" format="dimension"/>
+        <attr name="badgePaddingLeft" format="dimension"/>
+        <attr name="badgePaddingTop" format="dimension"/>
+        <attr name="badgePaddingRight" format="dimension"/>
+        <attr name="badgePaddingBottom" format="dimension"/>
     </declare-styleable>
 </resources>

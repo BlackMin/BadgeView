@@ -8,47 +8,16 @@
     android:orientation="vertical"
     android:gravity="center"
     tools:context=".MainActivity">
-
-    <com.baymax.android.badgeview.BadgeView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        app:badgeColor="#ff0000"
-        app:badgeType="text"
-        android:padding="4dp"
-        android:textSize="10sp"
-        android:visibility="gone"
-        android:textColor="#ffffff"/>
-
-    <com.baymax.android.badgeview.BadgeView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="99"
-        app:badgeColor="#ff0000"
-        app:badgeType="number"
-        android:padding="4dp"
-        android:textSize="10sp"
-        android:textColor="#ffffff"/>
-
-    <com.baymax.android.badgeview.BadgeView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:badgeColor="#ff0000"
-        app:badgeType="point"
-        android:textColor="#ffffff"/>
-
     <com.baymax.android.badgeview.BadgeLayout
         android:id="@+id/badge_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:badgeColor="#ff0000"
         app:badgeTextColor="#ffffff"
-        app:badgeType="text"
-        app:badgeOffSetX="0.5"
-        app:badgeOffSetY="0.5">
+        app:badgeType="number">
         <TextView
-            android:layout_width="180dp"
-            android:layout_height="180dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_gravity="center_horizontal|bottom"
             android:text="fdsfdsfsdsfdsfdsfdsfdsfsdfsfdsfsdfsdfdsfsdfsdfsfdsfsdfdsfsfsdfsdfs">
         </TextView>

@@ -46,6 +46,8 @@ public class BadgeView extends AppCompatTextView {
 
     private int textRadius = DEFAULT_TEXT_RADIUS;
 
+    private boolean willShowBadge = true;
+
     @ColorInt
     private int badgeColor = 0;
 
@@ -122,6 +124,7 @@ public class BadgeView extends AppCompatTextView {
                 break;
         }
         requestLayout();
+        invalidate();
     }
 
     @Override
@@ -136,6 +139,11 @@ public class BadgeView extends AppCompatTextView {
 
     public void setBadgeColor(int badgeColor) {
         this.badgeColor = badgeColor;
+        invalidate();
+    }
+
+    public void showBadge(boolean showBadge) {
+        this.willShowBadge = showBadge;
         invalidate();
     }
 
@@ -194,6 +202,9 @@ public class BadgeView extends AppCompatTextView {
     }
 
     private boolean needDraw() {
+        if(willShowBadge == false) {
+            return false;
+        }
         boolean needDraw = true;
         String text = (String) getText();
         switch (badgeType) {
